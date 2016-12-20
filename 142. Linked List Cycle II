@@ -1,0 +1,40 @@
+142. Linked List Cycle II
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+
+Note: Do not modify the linked list.
+
+Follow up:
+Can you solve it without using extra space?
+
+
+Python代码：
+class Solution(object):
+    def detectCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head:
+            return None
+        # 快慢指针查找法  判断是否为有环的链表
+        slow = fast = head
+        hasCycle = False
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                hasCycle  = True
+                break
+        
+        # 如果有环 从头遍历查找 相遇的节点即环的起点
+        if hasCycle:       
+            finder = head
+            while finder:
+                if finder == fast:
+                    return finder
+                else:
+                    finder = finder.next
+                    fast = fast.next
+        # 没有环 直接返回None
+        else:
+            return None

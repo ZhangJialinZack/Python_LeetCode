@@ -1,0 +1,42 @@
+189. Rotate Array
+Rotate an array of n elements to the right by k steps.
+
+For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,7,1,2,3,4].
+
+Note:
+Try to come up as many solutions as you can, there are at least 3 different ways to solve this problem.
+
+Related problem: Reverse Words in a String II
+
+
+Python代码：
+class Solution(object):
+    def rotate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        # 方案一  分成左右两组，清空原先数组，右边数组和左边数组组合成新数组后，添加到原数组。
+        # lenNums = len(nums)
+        # k = k % lenNums # 当k>len(nums)时，相当于移动k%len(nums)次
+        # arr_left = nums[:(lenNums-k)]
+        # arr_right = nums[(lenNums-k):]
+        # del nums[:]
+        # nums.extend(arr_right + arr_left)
+        
+        # 方案二  临时保存右侧被移出数组，然后整体向右平移左侧未被移出数组，最后替换数组前面数据为临时数组
+        # k = k % len(nums)
+        # if(k == 0):
+        #     return 
+        # tempNums = nums[-k:]
+        # nums[k:] = nums[:(len(nums)-k)]
+        # nums[:k] = tempNums
+        
+        # 方案三  临时保存左侧未被移出数组，然后替换数组前面数据为被移出数组，最后设置数组右侧为临时数组
+        k = k % len(nums)
+        if(k == 0):
+            return 
+        tempNums = nums[:(len(nums)-k)]
+        nums[:k] = nums[-k:]
+        nums[k:] = tempNums

@@ -1,0 +1,56 @@
+23. Merge k Sorted Lists
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+
+
+Python代码：
+class Solution(object):
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        # 方案一  模仿归并算法
+        # if not lists:
+        #     return None
+        # if len(lists) == 1:
+        #     return lists[0]
+        
+        # lenLists = len(lists)
+        # mid = lenLists / 2
+        # left = self.mergeKLists(lists[:mid])
+        # right = self.mergeKLists(lists[mid:])
+        
+        # merge left and right
+        # dummy  = ListNode(0)
+        # p = dummy
+        # while left or right:
+        #     if not right or (left and left.val <= right.val):
+        #         p.next = left
+        #         left = left.next
+        #     else:
+        #         p.next = right
+        #         right = right.next
+        #     p = p.next
+        # return dummy.next
+        
+        # 方案二  采用堆结构
+        
+        # 首先将各个链表的头节点压入数组
+        heap = []
+        for node in lists:
+            if node:
+                heap.append((node.val ,node))
+        # 将数组堆化
+        heapq.heapify(heap)
+        # 排序生成链表
+        dummy = ListNode(0)
+        p = dummy
+        # 注意  循环判断条件为数组不为空
+        while heap:
+            pop = heapq.heappop(heap)  # 弹出最小节点信息元组
+            p.next = pop[1]            # 串联起来
+            p = p.next                 # 串联起来
+            if pop[1].next:            # 压入某个链表后续节点
+                heapq.heappush(heap, (pop[1].next.val ,pop[1].next))
+                
+        return dummy.next

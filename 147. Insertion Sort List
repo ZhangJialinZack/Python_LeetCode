@@ -1,0 +1,44 @@
+147. Insertion Sort List
+Sort a linked list using insertion sort.
+
+Python代码：
+class Solution(object):
+    def insertionSortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        # 如果链表长度小于2 直接返回head
+        if not head or not head.next:
+            return head
+        
+        p = head
+        while p.next:
+            cur = p.next
+            # 不需要排序的情况
+            if cur.val >= p.val:
+                p = p.next
+                continue
+            
+            # 排在当前head前面的情况
+            if cur.val < head.val:
+                p.next = cur.next  # 删除cur节点
+                cur.next = head    # cur放在头位置
+                head = cur         # head指向新的头
+                continue
+                
+            # 排在中间的情况
+            pos = self.findPositon(head, cur) # 找到要插入位置前的一个节点
+            p.next = cur.next                 # 删除cur节点
+            cur.next = pos.next               # cur指向pos的后面一个节点
+            pos.next = cur                    # pos指向cur节点
+            
+        return head
+
+    # 查找要插入节点位置的前一个节点
+    def findPositon(self, head, node):
+        pos = head
+        while head and head.val < node.val:
+            pos = head
+            head = head.next
+        return pos

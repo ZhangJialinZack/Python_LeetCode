@@ -1,0 +1,39 @@
+374. Guess Number Higher or Lower
+We are playing the Guess Game. The game is as follows:
+
+I pick a number from 1 to n. You have to guess which number I picked.
+
+Every time you guess wrong, I'll tell you whether the number is higher or lower.
+
+You call a pre-defined API guess(int num) which returns 3 possible results (-1, 1, or 0):
+
+-1 : My number is lower
+ 1 : My number is higher
+ 0 : Congrats! You got it!
+Example:
+n = 10, I pick 6.
+
+Return 6.
+
+
+Python代码：
+import random
+
+class Solution(object):
+    def guessNumber(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        low = 0     # 猜数区间起点
+        high = n+1  # 猜数区间终点
+        while(low + 1 < high):
+            num = random.randint((low+1), (high-1))  # 随机生成介于（low，high）之间的整数
+            if(guess(num) == 0): # 猜中直接返回结果
+                return num
+            elif(guess(num) < 0):# 猜的数大了  更改区间终点为所猜数字
+                high = num
+            else:                # 猜的数小了  更改区间起点为所猜数字
+                low = num
+                
+        return high-1            # 此处也可以改成 low+1  即返回介于两个相差为2的数字之间的数字

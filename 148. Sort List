@@ -1,0 +1,60 @@
+148. Sort List
+Sort a linked list in O(n log n) time using constant space complexity.
+
+
+Python代码：
+class Solution(object):  
+    # 双指针查找中间节点
+    def getMidOfList(self, head):
+        if not head:
+            return head
+        slow = fast = head
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+            
+        return slow
+        
+        
+    def merge(self, lhead, rhead):
+        # 设置一个头结点
+        dummy = ListNode(0)
+        # 记录头结点位置
+        p = dummy
+        # 排序合并两个链表
+        i = lhead
+        j = rhead
+        while i and j:
+            if i.val < j.val:
+                p.next = i
+                i = i.next
+            else:
+                p.next = j
+                j = j.next
+            p = p.next
+        # 未合并的链表部分
+        if i:
+            p.next = i
+        else:
+            p.next = j
+            
+        return dummy.next
+        
+        
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head or not head.next:
+            return head
+            
+        # 归并排序算法
+        midNode = self.getMidOfList(head)
+        lhead = head
+        rhead = midNode.next
+        midNode.next = None # 注意  此处需要切断链表结构
+        
+        return self.merge(self.sortList(lhead), self.sortList(rhead))
+        
+    

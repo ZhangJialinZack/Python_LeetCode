@@ -1,0 +1,49 @@
+234. Palindrome Linked List
+Given a singly linked list, determine if it is a palindrome.
+
+Follow up:
+Could you do it in O(n) time and O(1) space?
+
+
+Python代码：
+class Solution(object):
+    # 反转一个链表
+    def reverseList(self, head):
+        temp = None
+        # p追踪当前的节点
+        p = head
+        # head每次前进一步 参与循环
+        while head:
+            p = head
+            head = head.next
+            p.next = temp
+            temp = p
+        # 最终p指向原先链表的最后一个节点
+        return p
+        
+    def isPalindrome(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        # 找到中间节点位置  反转后一半链表  然后一一比较数值
+        
+        if not head or not head.next:
+            return True
+        
+        # 使用双指针追踪到链表中间位置
+        slow = head
+        fast = head.next  # 注意 fast的起点是head.next 避免奇数和偶数个数的链表查找中间节点不一致的现象 
+                          # 使得最终slow停在最中间的节点位置（奇数情况下）或者中间偏左一个节点位置（偶数情况下）
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        
+        p = self.reverseList(slow.next)
+        while p:
+            if p.val != head.val:
+                return False
+            p = p.next
+            head = head.next
+        
+        return True

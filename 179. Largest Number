@@ -1,0 +1,22 @@
+179. Largest Number
+Given a list of non negative integers, arrange them such that they form the largest number.
+
+For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
+
+Note: The result may be very large, so you need to return a string instead of an integer.
+
+Credits:
+Special thanks to @ts for adding this problem and creating all test cases.
+
+
+Python代码：
+class Solution:
+    # @param {integer[]} nums
+    # @return {string}
+    def largestNumber(self, nums):
+        num = sorted([str(x) for x in nums], cmp = self.compare)  # 使用sorted函数进行排序
+        ans = ''.join(num).lstrip('0')    # 使用空字符进行连接，使之成为字符串  同时清除左侧无用'0'
+        return ans or '0'                 # 如果ans是'',则返回'0'
+
+    def compare(self, a, b):
+        return [1, -1][a + b > b + a] # 默认排序为升序  即-1

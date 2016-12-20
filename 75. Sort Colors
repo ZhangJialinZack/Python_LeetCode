@@ -1,0 +1,30 @@
+75. Sort Colors
+Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+
+Note:
+You are not suppose to use the library's sort function for this problem.
+
+
+Python代码：
+class Solution(object):
+    def sortColors(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        # 双指针跟踪
+        p0 = 0             # 追踪数字0
+        p2 = len(nums) - 1 # 追踪数字2
+        i =  0
+        while i <= p2:
+            if nums[i] == 0:
+                nums[p0], nums[i] = nums[i], nums[p0] # 找到0 放到最左边从左到右依次排好
+                p0 += 1
+                i += 1
+            elif nums[i] == 2:
+                nums[p2], nums[i] = nums[i], nums[p2] # 找到2 放到最右边从右到左依次排好
+                p2 -= 1
+            else:
+                i += 1  # 数字1直接忽略

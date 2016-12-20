@@ -1,0 +1,27 @@
+84. Largest Rectangle in Histogram
+
+
+
+Python代码：
+class Solution(object):
+    def largestRectangleArea(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        # 该问题即求  一段升序序列中出现的最大矩形面积
+        
+        # 维护一个栈，记录当前柱子所在位置，并维持其升序性
+        stack = []
+        ans = 0
+        heights.append(-1)  # 方便收尾
+        for i in range(len(heights)):
+            current = heights[i]
+            # 当柱子第一次出现降序时  统计出当前情况下所有可能的矩形面积 并记录最大面积
+            while len(stack) != 0 and current <= heights[stack[-1]]:
+                h = heights[stack.pop()]
+                w = i if len(stack) == 0 else i - stack[-1] - 1
+                ans = max(ans, h * w)
+            stack.append(i)
+            
+        return ans

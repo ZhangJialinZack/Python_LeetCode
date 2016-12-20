@@ -1,0 +1,65 @@
+5. Longest Palindromic Substring
+Given a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.
+
+
+Python代码：
+class Solution(object):
+    # 求最长公共子字符串
+    # def longestCommonSubString(self, str1, str2):
+    #     maxStr = ''
+    #     for i in range(0, len(str1)+len(str2)-1):
+    #         str1Start = str2Start = 0
+    #         minLen = 0
+    #         if(i < len(str1)):
+    #             str1Start = len(str1)-1-i
+    #             minLen = len(str1)-str1Start
+    #         else:
+    #             str2Start = i-len(str1)+1
+    #             minLen = len(str2)-str2Start
+    #         temStr = ''
+    #         for j in range(0,minLen):
+    #             if(str1[str1Start+j] == str2[str2Start+j]):
+    #                 temStr += str1[str1Start+j]
+    #             else:
+    #                 if(len(temStr) > len(maxStr)):
+    #                     maxStr = temStr
+    #                 temStr = ''
+    #         if(len(temStr) > len(maxStr)):
+    #                 maxStr = temStr
+    #         temStr = ''
+           
+    #     return maxStr
+    
+    # 求回文字符串长度
+    def lengthOfPalindrome(self, i, j, s):
+        lengthStr = len(s)
+        curLen = 0
+        while(i >= 0 and j < lengthStr and s[i] == s[j]):
+            i -= 1
+            j += 1
+        curLen = (j-1)-(i+1)+1
+        return curLen
+        
+    def longestPalindrome(self, s):
+        maxLen = 0
+        startPos = 0
+        
+        for i in range(0, len(s)):
+            oddLen = evenLen = curLen = 0
+            evenLen = self.lengthOfPalindrome(i,i,s)
+            if(i +1 < len(s)):
+                oddLen = self.lengthOfPalindrome(i,i+1,s)
+                
+            if(oddLen > evenLen):
+                curLen = oddLen
+            else:
+                curLen = evenLen
+            
+            if(curLen > maxLen):
+                maxLen = curLen
+                if(maxLen % 2 == 0):
+                    startPos = i - maxLen/2 +1
+                else:
+                    startPos = i - maxLen/2
+            
+        return s[startPos:(startPos+maxLen)]

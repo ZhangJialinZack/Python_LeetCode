@@ -1,0 +1,29 @@
+83. Remove Duplicates from Sorted List
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+For example,
+Given 1->1->2, return 1->2.
+Given 1->1->2->3->3, return 1->2->3.
+
+
+Python代码：
+class Solution(object):
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        # 设置一个头节点
+        dummy = ListNode(0)
+        dummy.next = head
+        # 使用指针p参与循环
+        p = dummy
+        while p.next:
+            # 临时节点temp寻找每个最后的重复节点
+            temp = p.next
+            while temp.next and temp.val == temp.next.val:
+                temp = temp.next
+            p.next = temp
+            p = p.next
+            
+        return dummy.next

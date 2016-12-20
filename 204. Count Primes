@@ -1,0 +1,31 @@
+204. Count Primes
+Description:
+Count the number of prime numbers less than a non-negative number, n.
+
+
+Python代码：
+class Solution(object):
+    def countPrimes(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        # 埃拉托斯特尼筛法
+        
+        # 假定定小于n的数字都是素数  用一个数组来表示
+        isPrime = [True] * (n-1)
+        if n >= 2:                 # “1”一定不是素数
+            isPrime[0] = False
+        
+        for i in range(2, n):     # 从“2”开始判断
+            # 如果当前数字的平方大于n 直接跳出循环
+            if i * i > n:
+                break
+            if(isPrime[i-1]):
+                # 过滤当前数字的倍数
+                p = i * i
+                while p < n:
+                    isPrime[p - 1] = False
+                    p += i
+        
+        return sum(isPrime)

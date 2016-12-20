@@ -1,0 +1,58 @@
+387. First Unique Character in a String
+Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
+
+Examples:
+
+s = "leetcode"
+return 0.
+
+s = "loveleetcode",
+return 2.
+Note: You may assume the string contain only lowercase letters.
+
+
+Python代码：
+class Solution(object):
+    def firstUniqChar(self, s):
+        # 方法一 
+        # for k in s:
+        #     if (s.find(k) == s.rfind(k)):  # 判断正方向查找字符的下标是否相同
+        #         return s.find(k)
+        # return -1
+
+        # 方法二
+        # tempS = []   # 从未出现过的字符
+        # tempS2 = []  # 已经出现的字符
+        # for i in range(len(s)):
+        #     if(s[i] in tempS2):    # 判断字符是否出现过
+        #         continue
+            
+        #     if(s[i] in tempS):     # 如果和未出现的字符一样 则从未出现的字符数组中移出 放进已出现的字符数组中
+        #         tempS2.append(s[i])
+        #         tempS.remove(s[i])
+        #     else:
+        #         tempS.append(s[i]) # 如果从未出现过 添加进去第一个数组
+
+        # if(len(tempS) == 0):
+        #     return -1
+        
+        # return s.index(tempS[0])
+        
+        # 方法三
+        dict = {}
+        tmpS = s[:]
+        k = 0
+        while(k < len(s)):
+            key = s[k]
+            k += 1
+            if(dict.get(key) == -1):
+                continue
+            if(dict.get(key) == 1):
+                dict[key] = -1
+                tmpS = tmpS.replace(key, '')
+            if(dict.get(key) == None):
+                dict[key] = 1
+                
+        if(len(tmpS) == 0):
+            return -1
+        return s.index(tmpS[0])

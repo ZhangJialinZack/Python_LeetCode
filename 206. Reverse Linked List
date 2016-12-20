@@ -1,0 +1,42 @@
+206. Reverse Linked List
+Reverse a singly linked list.
+
+
+Python代码：
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head == None or head.next == None:
+            return head
+        # 方案一  更新val
+        # p = head
+        # stack = []
+        # # 所有val存入数组
+        # while p:
+        #     stack.append(p.val)
+        #     p = p.next
+        
+        # p = head
+        # # 反向替换掉原来的值
+        # while p:
+        #     p.val = stack.pop()
+        #     p = p.next
+
+        # return head
+        
+        # 方案二 更新指针
+        # temp 记录被串联起来的链表的最后一个节点
+        temp = None
+        # p追踪当前的节点
+        p = head
+        # head每次前进一步 参与循环
+        while head:
+            p = head
+            head = head.next
+            p.next = temp
+            temp = p
+        # 最终p指向原先链表的最后一个节点
+        return p

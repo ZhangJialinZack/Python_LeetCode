@@ -1,0 +1,38 @@
+2. Add Two Numbers
+You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+
+
+Python代码：
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        # 设置一个临时头
+        dummy = ListNode(0)
+        p = dummy
+        # 存储1或者0
+        addOne = 0
+        while l1 or l2:
+            left = (l1 and l1.val or 0)  # 存储当前l1的值 没有则为0
+            right = (l2 and l2.val or 0) # 存储当前l2的值 没有则为0
+            sum = left + right + addOne  # 求和
+            val = sum % 10               # 节点中实际的数字
+            addOne = sum / 10            # 是否加1
+
+            p.next = ListNode(val)       # 指向值为val的节点
+            p = p.next
+            if l1: # 注意判断一下是否为None
+                l1 = l1.next
+            if l2: # 注意判断一下是否为None
+                l2 = l2.next
+        # 如果到最后addOne依然是1 添加一个值为1的节点放在最后面
+        if addOne == 1:
+            p.next = ListNode(1)
+            
+        return dummy.next

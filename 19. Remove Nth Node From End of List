@@ -1,0 +1,39 @@
+19. Remove Nth Node From End of List
+Given a linked list, remove the nth node from the end of list and return its head.
+
+For example,
+
+   Given linked list: 1->2->3->4->5, and n = 2.
+
+   After removing the second node from the end, the linked list becomes 1->2->3->5.
+Note:
+Given n will always be valid.
+Try to do this in one pass.
+
+
+Python代码：
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        # 加一个头结点
+        dummy = ListNode(0)
+        dummy.next = head
+        # 双指针首先指向头指针
+        p1 = p2 = dummy
+        # 指针p1先跑n个位置
+        for i in range(n):
+            p1 = p1.next
+        # 注意循环判断条件是 p1.next 即跑到链表末尾
+        # 抛完后p2即倒数第n+1个位置的节点
+        while p1.next:
+            p1 = p1.next
+            p2 = p2.next
+        # 干掉目标节点
+        p2.next = p2.next.next
+        
+        return dummy.next
+        

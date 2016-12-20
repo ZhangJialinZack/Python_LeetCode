@@ -1,0 +1,27 @@
+1. Two Sum
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+（给定一个整型数字数组，返回两个数字的下标，使其对应数字之和等于一个特定的数字）
+You may assume that each input would have exactly one solution.
+（你可以假定每次输入都有唯一确定的解）
+
+例如:
+Given nums = [2, 7, 11, 15], target = 9,
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+
+
+Python代码:
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        # 初始化一个字典，用来查找或者保存数组中的数据（字典查找采用了哈希表原理，查找效率高）
+        dict = {}
+        # 遍历这个数组
+        for i in range(len(nums)): 
+            if((target - nums[i]) in dict): # 如果发现所求数字在字典中，直接返回两个下标构成的数组
+                return [dict[(target - nums[i])], i]
+            dict[nums[i]] = i               # 如果字典中没有对应的数字，直接将当前的数字保存到字典中

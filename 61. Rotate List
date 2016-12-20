@@ -1,0 +1,45 @@
+61. Rotate List
+Given a list, rotate the list to the right by k places, where k is non-negative.
+
+For example:
+Given 1->2->3->4->5->NULL and k = 2,
+return 4->5->1->2->3->NULL.
+
+
+Python代码：
+class Solution(object):
+    def rotateRight(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        if not head or not head.next:
+            return head
+            
+        # 找出链表长度 并返回有效的k值
+        count = 0
+        dummy = ListNode(0)
+        dummy.next = head
+        p = dummy
+        while p.next:
+            count += 1
+            p = p.next
+        k = k % count
+        # 如果k是链表长度的整数倍  则相当于不移动 直接return head
+        if k == 0:
+            return head
+        # 使用快慢指针，快指针先走k步，然后两个指针一起走，最后慢指针指向倒数第（k+1）个节点的位置
+        slow = fast = dummy
+        while k > 0:
+            fast = fast.next
+            k -= 1
+        while fast.next:
+            slow = slow.next
+            fast = fast.next
+        # 设置慢指针的下一个节点为新的头 同时使慢指针指向None 将原先链表的最后一个节点指向head节点
+        newHead = slow.next
+        slow.next = None
+        fast.next = dummy.next
+        
+        return newHead

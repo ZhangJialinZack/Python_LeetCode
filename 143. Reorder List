@@ -1,0 +1,54 @@
+143. Reorder List
+Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+
+You must do this in-place without altering the nodes' values.
+
+For example,
+Given {1,2,3,4}, reorder it to {1,4,2,3}.
+
+
+Python代码：
+class Solution(object):
+    def reverseList(self, head):
+        # temp 记录被串联起来的链表的最后一个节点
+        temp = None
+        # p追踪当前的节点
+        p = head
+        # head每次前进一步 参与循环
+        while head:
+            p = head
+            head = head.next
+            p.next = temp
+            temp = p
+        # 最终p指向原先链表的最后一个节点
+        return p
+        
+    def reorderList(self, head):
+        """
+        :type head: ListNode
+        :rtype: void Do not return anything, modify head in-place instead.
+        """
+        # 思路： 拆分链表为左右两段 将右半段反转后 一一缝合到左边的链表中
+        if not head or not head.next or not head.next.next:
+            return 
+            
+        # 双指针查找到中点
+        slow  = fast = head
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+        # 分成左右两段  并将右边半段反转
+        right = self.reverseList(slow.next)
+        slow.next = None
+        left = head
+        # 缝合右边到左边
+        while right:
+            nextLeft = left.next     # 提前记录当前节点的下一个节点
+            nextRight = right.next   # 提前记录当前节点的下一个节点
+            left.next = right        # 缝合right
+            right.next = nextLeft    # 缝合left
+            right = nextRight        # 左边前进一步
+            left = nextLeft          # 右边前进一步
+            
+        return

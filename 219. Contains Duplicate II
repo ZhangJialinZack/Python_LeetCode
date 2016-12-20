@@ -1,0 +1,31 @@
+219. Contains Duplicate II
+Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the difference between i and j is at most k.
+
+
+Python代码:
+class Solution(object):
+    def containsNearbyDuplicate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        if(not nums or len(nums) <= 1 or k == 0):
+            return False
+            
+        # 方法：使用set维护长度为k的数组 并作为滑块向数组末尾移动
+            
+        i = 0
+        s = set(nums[:i+k+1])
+        numsSize = len(nums)
+        minNum = min(k+1, numsSize)
+        
+        while(i < numsSize-1):
+            if(len(s) < minNum):
+                return True
+            if(i + k +1 >= numsSize):
+                return False
+            start = nums[i]
+            s.remove(start)
+            s.add(nums[i+k+1])
+            i += 1

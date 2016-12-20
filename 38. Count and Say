@@ -1,0 +1,43 @@
+38. Count and Say
+The count-and-say sequence is the sequence of integers beginning as follows:
+1, 11, 21, 1211, 111221, ...
+
+1 is read off as "one 1" or 11.
+11 is read off as "two 1s" or 21.
+21 is read off as "one 2, then one 1" or 1211.
+Given an integer n, generate the nth sequence.
+
+Note: The sequence of integers will be represented as a string.
+
+Python代码：
+class Solution(object):
+    def nextStr(self, myStr):
+        returnStr = ''
+        i = 0
+        count = 1  # 统计某个数字出现的次数 默认为1
+        strSize = len(myStr)
+        while(i < strSize):
+            if(i < strSize-1 and myStr[i] == myStr[i+1]): # 记录重复数字
+                count += 1 
+            else:     # 遇到不重复时 记录returnStr 并且恢复count为1
+                returnStr += str(count)
+                returnStr += myStr[i]
+                count = 1
+            i += 1
+        if(i == strSize - 1): # 如果最后一个数字未被记录次数
+            returnStr += str(count)
+            returnStr += myStr[i]
+        return returnStr
+                
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        aStr = '1'
+        
+        if(n == 1):
+            return aStr
+        else:
+            curStr = self.nextStr(self.countAndSay(n-1))
+            return curStr

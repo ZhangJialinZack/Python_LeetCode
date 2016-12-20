@@ -1,0 +1,36 @@
+226.Invert a binary tree. 
+
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+
+to
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+（将上面的树转化成下面的样子）
+
+Python代码:
+class Solution(object):
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        # 如果根节点为空  返回None
+        if not root:
+            return None
+        # 交换左右子树
+        temp = root.left
+        root.left = root.right
+        root.right = temp
+        # 递归交换后的左右子树
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+        
+        # 不要忘记返回根节点
+        return root

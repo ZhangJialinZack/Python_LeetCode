@@ -1,0 +1,30 @@
+122. Best Time to Buy and Sell Stock II
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times). However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+
+Python代码：
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if(len(prices) < 2):
+            return 0
+        
+        profit = 0  # 记录每次收益
+        lowPrice = prices[0] # 记录每个单调上升区间的起点
+        highPrice = prices[0] # 记录每个单调上升区间的终点
+        for i in range(1, len(prices)):
+            if prices[i] >= prices[i-1]:
+                highPrice = prices[i]
+            else:
+                profit += highPrice - lowPrice
+                lowPrice = highPrice = prices[i]
+        # 如果最后的单调上升区间终点正好是数组的末尾
+        # 记得加上最后的收益
+        profit += highPrice - lowPrice
+        
+        return profit

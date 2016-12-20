@@ -1,0 +1,69 @@
+214. Shortest Palindrome
+Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
+
+For example:
+
+Given "aacecaaa", return "aaacecaaa".
+
+Given "abcd", return "dcbabcd".
+
+Credits:
+Special thanks to @ifanchu for adding this problem and creating all test cases. Thanks to @Freezen for additional test cases.
+
+
+Python代码：
+class Solution(object):
+     def lengthOfPalindrome(self, i, j, s):
+        lengthStr = len(s)
+        curLen = 0
+        while(i >= 0 and j < lengthStr and s[i] == s[j]):
+            i -= 1
+            j += 1
+        curLen = (j-1)-(i+1)+1
+        return curLen
+        
+     def longestPalindrome(self, s):
+         # 记录最大回文长度
+        maxLen = 0
+        for i in range(0, len(s)/2+1):
+            # 分为偶回文 和 奇回文
+            oddLen = evenLen = curLen = 0
+            # 奇回文长度
+            if(i - self.lengthOfPalindrome(i,i,s)/2 == 0):
+                evenLen = self.lengthOfPalindrome(i,i,s) 
+            # 偶回文长度
+            if(i < len(s)/2 and i - self.lengthOfPalindrome(i,i+1,s)/2 +1 == 0):
+                oddLen = self.lengthOfPalindrome(i,i+1,s)
+            # 记录当前较大回文长度
+            if(oddLen > evenLen):
+                 curLen = oddLen
+            else:
+                 curLen = evenLen
+            # 找到最大回文长度
+            if(curLen > maxLen):
+                maxLen = curLen
+        return maxLen
+        
+     def shortestPalindrome(self, s):
+        # 方法一  超时
+        i = len(s)
+        rS = s[::-1] # 反转字符串
+        while(i > 0):
+            if(s[:i] == rS[-i:]):
+                break
+            i -= 1
+        return s[i:][::-1]+s
+        
+        # 方法二  超时
+        # i = self.longestPalindrome(s)
+        # return s[i:][::-1]+s
+        
+        # 方法三
+        # rS = s[::-1] # 反转字符串
+        # length = len(s)
+        # i = length
+        # while(i > 0):
+        #     if(s.startswith(rS[(length-i):])): # 判断逆序字符串的后i个子字符串是否是原先字符串的前缀
+        #         break
+        #     i -= 1
+        # return s[i:][::-1]+s

@@ -1,0 +1,38 @@
+86. Partition List
+Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+
+You should preserve the original relative order of the nodes in each of the two partitions.
+
+For example,
+Given 1->4->3->2->5->2 and x = 3,
+return 1->2->2->4->3->5.
+
+
+Python代码：
+class Solution(object):
+    def partition(self, head, x):
+        """
+        :type head: ListNode
+        :type x: int
+        :rtype: ListNode
+        """
+        # 链表长度小于2  直接返回head
+        if not head or not head.next:
+            return head
+        # 创建两个新的头节点 方便串联各自的目标节点
+        pold = oldHead = ListNode(0)
+        pnew = newHead = ListNode(1)
+        # 这里完成串联工作
+        while head:
+            if head.val >= x:
+                pnew.next = head
+                pnew = pnew.next
+            else:
+                pold.next = head
+                pold = pold.next
+            head = head.next
+        # 注意 串联完成后 最后一个节点要么连接链表  要么置None
+        pold.next = newHead.next
+        pnew.next = None
+        
+        return oldHead.next

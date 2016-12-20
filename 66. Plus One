@@ -1,0 +1,25 @@
+66. Plus One
+Given a non-negative number represented as an array of digits, plus one to the number.
+
+The digits are stored such that the most significant digit is at the head of the list.
+
+
+Python代码：
+class Solution(object):
+    def plusOne(self, digits):
+        # 反转
+        digits.reverse()
+        flag = 1
+        size = len(digits)
+        for i in range(0,size):
+            digits[i] += flag      # 实际得数
+            flag = digits[i] / 10  # 是否加1
+            digits[i] %= 10        # 余数
+        
+        # 如果最后flag仍为1 在最高位放1
+        if(flag == 1):
+            digits.append(1)
+        # 再次反转
+        digits.reverse()
+        return digits
+

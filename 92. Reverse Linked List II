@@ -1,0 +1,68 @@
+92. Reverse Linked List II
+Reverse a linked list from position m to n. Do it in-place and in one-pass.
+
+For example:
+Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+
+return 1->4->3->2->5->NULL.
+
+Note:
+Given m, n satisfy the following condition:
+1 ≤ m ≤ n ≤ length of list.
+
+
+Python代码：
+class Solution(object):
+    # 反转链表
+    def reverseList(self, head):
+        temp = None
+        # p追踪当前的节点
+        p = head
+        # head每次前进一步 参与循环
+        while head:
+            p = head
+            head = head.next
+            p.next = temp
+            temp = p
+        
+    def reverseBetween(self, head, m, n):
+        """
+        :type head: ListNode
+        :type m: int
+        :type n: int
+        :rtype: ListNode
+        """
+        # 链表长度小于2 或者 m >= n 直接返回head
+        if not head or not head.next or m >= n:
+            return head
+        
+        # 设置临时头节点指向head
+        dummy = ListNode(0)
+        dummy.next = head
+        # 快慢指针
+        slow = fast = dummy
+        # 让快指针先跑n - m  + 1的距离
+        distance = n - m  + 1
+        while distance and fast.next:
+            fast = fast.next
+            distance -= 1
+        # 然后俩指针一起跑 m-1 步
+        # 使得slow指向要反转链表头结点的前一个节点
+        # 使得fast指向要反转链表的尾节点
+        while m > 1:
+            slow = slow.next
+            fast = fast.next
+            m -= 1
+        # cur为要反转链表的头节点
+        cur = slow.next
+        # right为要反转链表尾节点的下一个节点
+        right = fast.next
+        # 这里将尾节点指向None 方便反转
+        fast.next = None
+        # 反转
+        self.reverseList(cur)
+        # 翻转后 slow->fast cur->right
+        slow.next = fast
+        cur.next = right
+        
+        return dummy.next

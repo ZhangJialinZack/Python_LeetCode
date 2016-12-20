@@ -1,0 +1,40 @@
+21. Merge Two Sorted Lists
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+
+Python代码：
+class Solution(object):
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        tempNode = ListNode(0)
+        cursorNode = tempNode
+        # 下面两个while语句  合并的方法任选其一都可以
+        # while l1 and l2:
+        #     if l1.val <= l2.val:
+        #         cursorNode.next = l1
+        #         cursorNode = cursorNode.next
+        #         l1 = l1.next
+        #     else:
+        #         cursorNode.next = l2
+        #         cursorNode = cursorNode.next
+        #         l2 = l2.next
+        
+        # if not l1:
+        #     cursorNode.next = l2
+        # else:
+        #     cursorNode.next = l1
+        
+        while l1 or l2:
+            if not l2 or (l1 and l1.val <= l2.val):
+                cursorNode.next = l1
+                l1 = l1.next
+            else:
+                cursorNode.next = l2
+                l2 = l2.next
+            cursorNode = cursorNode.next
+        
+        return tempNode.next

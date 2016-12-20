@@ -1,0 +1,32 @@
+203. Remove Linked List Elements
+Remove all elements from a linked list of integers that have value val.
+
+Example
+Given: 1 --> 2 --> 6 --> 3 --> 4 --> 5 --> 6, val = 6
+Return: 1 --> 2 --> 3 --> 4 --> 5
+
+
+Python代码：
+class Solution(object):
+    def removeElements(self, head, val):
+        """
+        :type head: ListNode
+        :type val: int
+        :rtype: ListNode
+        """
+        # 设置一个头结点指向head
+        dummy = ListNode(0)
+        dummy.next = head
+        # p 指针方便查找
+        p = dummy
+        # 遍历链表
+        while p.next:
+            current = p.next
+            # 找到目标数值节点 直接将当前节点目标节点的下一节点
+            if current.val == val:
+                p.next = current.next
+            # 否则直接串起来
+            else:
+                p = p.next
+        
+        return dummy.next

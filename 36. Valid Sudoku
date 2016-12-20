@@ -1,0 +1,56 @@
+36. Valid Sudoku
+Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
+
+The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+A partially filled sudoku which is valid.
+
+Note:
+A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.
+
+
+Python代码：
+class Solution(object):
+    def isValidSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: bool
+        """
+        # 检查九个行
+        for row in board:
+            nums = [0] * 9
+            for i in range(9):
+                if row[i] == '.':
+                    continue
+                if row[i] > '9' or row[i] < '0':
+                    return False
+                if nums[(ord(row[i])-ord('1'))] == 1:
+                    return False
+                nums[(ord(row[i])-ord('1'))] = 1
+            
+        # 检查九个列
+        for j in range(9):
+            nums = [0] * 9
+            for column in board:
+                if column[j] == '.':
+                    continue
+                if column[j] > '9' or column[j] < '0':
+                    return False
+                if nums[(ord(column[j])-ord('1'))] == 1:
+                    return False
+                nums[(ord(column[j])-ord('1'))] = 1
+                
+        # 检查九个小九宫格
+        for k in range(0,9,3):
+            for l in range(0,9,3):
+                nums = [0] * 9
+                for m in range(k, k+3):
+                    for n in range(l, l+3):
+                        if board[m][n] == '.':
+                            continue
+                        if board[m][n] > '9' or board[m][n] < '0':
+                            return False
+                        if nums[(ord(board[m][n])-ord('1'))] == 1:
+                            return False
+                        nums[(ord(board[m][n])-ord('1'))] = 1
+        
+        return True

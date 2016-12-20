@@ -1,0 +1,22 @@
+217. Contains Duplicate
+Given an array of integers, find if the array contains any duplicates. Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.
+
+
+Python代码：
+class Solution(object):
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        # 方法一  判断哈希化后的数组长度是否小于原数组差长度
+        # return len(nums) > len(set(nums))
+        
+        #方法二  挨个添加进入字典 不存在则添加  存在则说明有重复项
+        dict = {}
+        for k in nums:
+            if(dict.get(k) == None):
+                dict[k] = 1
+            else:
+                return True
+        return False

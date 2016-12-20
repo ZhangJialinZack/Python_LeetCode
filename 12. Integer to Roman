@@ -1,0 +1,37 @@
+12. Integer to Roman
+Given an integer, convert it to a roman numeral.
+
+Input is guaranteed to be within the range from 1 to 3999.
+
+
+Python代码：
+class Solution(object):
+    def toRomanDigit(self, digit, a, b, c):
+        s = ''
+        if(digit < 4):
+            s += a*digit
+        if(digit == 4):
+            s += a+b
+        if(digit >=5 and digit < 9):
+            s += b+a*(digit-5)
+        if(digit == 9):
+            s += a+c
+        return s
+            
+    
+    def intToRoman(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        # romanDict = {'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}
+        s = ''
+        t = num/1000%10
+        h = num/100%10;
+        d = num/10%10
+        n = num%10
+        s += self.toRomanDigit(t, 'M', '', '')
+        s += self.toRomanDigit(h, 'C', 'D', 'M')
+        s += self.toRomanDigit(d, 'X', 'L', 'C')
+        s += self.toRomanDigit(n, 'I', 'V', 'X')
+        return s
